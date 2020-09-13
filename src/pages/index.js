@@ -15,6 +15,7 @@ const IndexPage = () => (
     </div>
     <section>
       <p>test</p>
+      <textarea name="" id="" cols="30" rows="10"></textarea>
     </section>
     <Link to="/page-2/">Go to page 2</Link> <br />
     <Link to="/using-typescript/">Go to "Using TypeScript"</Link>

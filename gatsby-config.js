@@ -1,3 +1,12 @@
+require("dotenv").config({
+  path: `.env`,
+})
+
+// require .env.development or .env.production
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -33,7 +42,23 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sass`,
       options: {
-        postCssPlugins: [require(`autoprefixer`)],
+        postCssPlugins: [
+          require(`autoprefixer`),
+          ...(process.env.NODE_ENV === `production`
+            ? [require(`cssnano`)]
+            : []),
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        printRejected: true, // Print removed selectors and processed file names
+        develop: true, // Enable while using `gatsby develop`
+        // tailwind: true, // Enable tailwindcss support
+        // whitelist: ['whitelist'], // Don't remove this selector
+        // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
+        // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
       },
     },
   ],
